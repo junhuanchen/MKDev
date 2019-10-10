@@ -7,23 +7,46 @@
 					   keyboard and mouse, and HID compatible device.           
 ********************************************************************************/
 #include ".\Public\CH552.H"
-#include ".\Public\debug.h"
+#include ".\Public\System.h"
+#include ".\Public\Mcu.h"
+
+#include ".\Usb\Usb.h"
 
 #include "stdio.h"
 
-void setup()
+void InitMkDev()
 {
   CfgFsys();    // Configure sys
   mDelaymS(5);  //
   mInitSTDIO(); //  Init UART0
-  LOG("main.\r\n");
+  CH554WDTModeSelect(1); // WDT
+  USBDeviceInit();
+  HAL_ENABLE_INTERRUPTS();
+  LOG("InitMkDev\r\n");
+}
+
+void CheckUsb()
+{
+  if (CheckPCReady() && CheckPCSleeped())
+  {
+    CH554USBDevWakeup();
+  }
 }
 
 void main(void)
 {
 
+  // UINT8 id = packet[0];
+  // UINT8 *pData = &packet[1];
+  // SendKeyboardToUsb(pData, KEYBOARD_LEN);
+  // SendMouseToUsb(pData, MOUSE_LEN);
+  
+  InitMkDev();
+
   while (1)
   {
-    continue;
+	  CH554WDTFeed(0);
+    // mDelaymS(100);  //
+    // LOG("CH554WDTFeed\r\n");
   }
 }

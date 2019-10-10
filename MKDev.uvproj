@@ -347,11 +347,6 @@
           <GroupName>Source Group</GroupName>
           <Files>
             <File>
-              <FileName>Compound.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Compound.C</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
@@ -360,11 +355,6 @@
               <FileName>README.TXT</FileName>
               <FileType>5</FileType>
               <FilePath>.\README.TXT</FilePath>
-            </File>
-            <File>
-              <FileName>Touch_Key.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Touch_Key\Touch_Key.C</FilePath>
             </File>
             <File>
               <FileName>DEBUG.C</FileName>

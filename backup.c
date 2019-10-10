@@ -8,7 +8,7 @@
 ********************************************************************************/
 #include ".\Public\CH554.H"
 #include "Compound.h"
-#include ".\Public\debug.h"
+#include ".\Public\System.h"
 #include ".\Touch_Key\Touch_Key.H"
 #include "stdio.h"
 
@@ -44,7 +44,7 @@ void main(void)
         }
         else
         {
-            if (TKEY_CTRL & bTKC_IF) //wait query finsh,max 2ms 获取键值基准值，多采样几次
+            if (TKEY_CTRL & bTKC_IF) //wait query finsh,max 2ms 获取�?值基准值，多采样几�?
             {
                 TouchKeyButton = TKEY_DAT; //
 #ifdef DE_PRINTF
