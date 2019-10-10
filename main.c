@@ -16,7 +16,7 @@ void setup()
   CfgFsys();    // Configure sys
   mDelaymS(5);  //
   mInitSTDIO(); //  Init UART0
-  printf("main.\r\n");
+  LOG("main.\r\n");
 }
 
 void main(void)

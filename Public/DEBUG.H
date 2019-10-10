@@ -23,6 +23,9 @@
 #ifndef DE_PRINTF
 #define DE_PRINTF 0
 #endif
+
+#define LOG printf
+
 #define FREQ_SYS 12000000 // ÏµÍ³Ö÷Æµ12MHz
 #ifndef UART0_BUAD
 #define UART0_BUAD 57600
