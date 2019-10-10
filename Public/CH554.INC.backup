@@ -1,20 +1,19 @@
-/*--------------------------------------------------------------------------
-CH552.H
-Header file for CH552 microcontrollers.
-****************************************
-**  Copyright  (C)  W.ch  1999-2016   **
-**  Web:              http:// wch.cn   **
-****************************************
---------------------------------------------------------------------------*/
+;/*--------------------------------------------------------------------------
+;CH554.INC
+;Header file for CH554 microcontrollers.
+;****************************************
+;**  Copyright  (C)  W.ch  1999-2014   **
+;**  Web:              http:// wch.cn   **
+;****************************************
+;--------------------------------------------------------------------------*/
 
-//  3 blocks: __BASE_TYPE__, __CH552_H__, __USB_DEF__
+$SAVE
+$NOLIST
+
+//  3 blocks: __BASE_TYPE__, __CH554_H__, __USB_DEF__
 
 #ifndef __BASE_TYPE__
 #define __BASE_TYPE__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*----- constant and type define -----------------------------------------*/
 
@@ -26,119 +25,10 @@ extern "C" {
 #define NULL    0
 #endif
 
-#ifndef BOOL
-typedef bit                             BOOL;
-#endif
-#ifndef UINT8
-typedef unsigned char                   UINT8;
-#endif
-#ifndef UINT16
-typedef unsigned short                  UINT16;
-#endif
-#ifndef UINT32
-typedef unsigned long                   UINT32;
-#endif
-#ifndef UINT8D
-typedef unsigned char  data             UINT8D;
-#endif
-#ifndef UINT16D
-typedef unsigned short data             UINT16D;
-#endif
-#ifndef UINT32D
-typedef unsigned long  data             UINT32D;
-#endif
-#ifndef UINT8I
-typedef unsigned char  idata            UINT8I;
-#endif
-#ifndef UINT16I
-typedef unsigned short idata            UINT16I;
-#endif
-#ifndef UINT32I
-typedef unsigned long  idata            UINT32I;
-#endif
-#ifndef UINT8X
-typedef unsigned char  xdata            UINT8X;
-#endif
-#ifndef UINT16X
-typedef unsigned short xdata            UINT16X;
-#endif
-#ifndef UINT32X
-typedef unsigned long  xdata            UINT32X;
-#endif
-#ifndef UINT8V
-typedef unsigned char volatile          UINT8V;
-#endif
-#ifndef UINT8DV
-typedef unsigned char volatile data     UINT8DV;
-#endif
-#ifndef UINT8XV
-typedef unsigned char volatile xdata    UINT8XV;
-#endif
-#ifndef UINT8PV
-typedef unsigned char volatile pdata    UINT8PV;
-#endif
-#ifndef UINT8C
-typedef const unsigned char code        UINT8C;
-#endif
-#ifndef PUINT8
-typedef unsigned char                 *PUINT8;
-#endif
-#ifndef PUINT16
-typedef unsigned short                *PUINT16;
-#endif
-#ifndef PUINT32
-typedef unsigned long                 *PUINT32;
-#endif
-#ifndef PUINT8I
-typedef unsigned char  idata          *PUINT8I;
-#endif
-#ifndef PUINT16I
-typedef unsigned short idata          *PUINT16I;
-#endif
-#ifndef PUINT32I
-typedef unsigned long  idata          *PUINT32I;
-#endif
-#ifndef PUINT8X
-typedef unsigned char  xdata          *PUINT8X;
-#endif
-#ifndef PUINT16X
-typedef unsigned short xdata          *PUINT16X;
-#endif
-#ifndef PUINT32X
-typedef unsigned long  xdata          *PUINT32X;
-#endif
-#ifndef PUINT8V
-typedef unsigned char volatile        *PUINT8V;
-#endif
-#ifndef PUINT8DV
-typedef unsigned char volatile data   *PUINT8DV;
-#endif
-#ifndef PUINT8XV
-typedef unsigned char volatile xdata  *PUINT8XV;
-#endif
-#ifndef PUINT8PV
-typedef unsigned char volatile pdata  *PUINT8PV;
-#endif
-#ifndef PUINT8C
-typedef const unsigned char code      *PUINT8C;
-#endif
-
-#ifndef STRUCT_OFFSET
-#define STRUCT_OFFSET( s, m )       ( (UINT8)( & (((s) *)0) -> (m) ) )  /* get the offset address for a member of a structure */
-#endif
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif  //  __BASE_TYPE__
 
-#ifndef __CH552_H__
-#define __CH552_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef __CH554_H__
+#define __CH554_H__
 
 /*----- SFR --------------------------------------------------------------*/
 /*  sbit are bit addressable, others are byte addressable */
@@ -592,7 +482,7 @@ sfr TKEY_DATL       = 0xC4;         //  ReadOnly: low byte of touch-key data
 sfr TKEY_DATH       = 0xC5;         //  ReadOnly: high byte of touch-key data
 #define bTKD_CHG          0x80      //  ReadOnly: indicate control changed, current data maybe invalid
 
-/*  USB Device Registers  */
+/*  USB/Host/Device Registers  */
 sfr USB_C_CTRL      = 0x91;         //  USB type-C control
 #define bVBUS2_PD_EN      0x80      //  USB VBUS2 10K pulldown resistance: 0=disable, 1=enable pullup
 #define bUCC2_PD_EN       0x40      //  USB CC2 5.1K pulldown resistance: 0=disable, 1=enable pulldown
@@ -614,6 +504,14 @@ sfr UDEV_CTRL       = 0xD1;         //  USB device physical port control
 #define bUD_LOW_SPEED     0x04      //  enable USB physical port low speed: 0=full speed, 1=low speed
 #define bUD_GP_BIT        0x02      //  general purpose bit
 #define bUD_PORT_EN       0x01      //  enable USB physical port I/O: 0=disable, 1=enable
+// sfr UHOST_CTRL      = 0xD1;         //  USB host physical port control
+#define UHOST_CTRL        UDEV_CTRL
+#define bUH_PD_DIS        0x80      //  disable USB UDP/UDM pulldown resistance: 0=enable pulldown, 1=disable
+#define bUH_DP_PIN        0x20      //  ReadOnly: indicate current UDP pin level
+#define bUH_DM_PIN        0x10      //  ReadOnly: indicate current UDM pin level
+#define bUH_LOW_SPEED     0x04      //  enable USB port low speed: 0=full speed, 1=low speed
+#define bUH_BUS_RESET     0x02      //  control USB bus reset: 0=normal, 1=force bus reset
+#define bUH_PORT_EN       0x01      //  enable USB port: 0=disable, 1=enable port, automatic disabled if USB device detached
 sfr UEP1_CTRL       = 0xD2;         //  endpoint 1 control
 #define bUEP_R_TOG        0x80      //  expected data toggle flag of USB endpoint X receiving (OUT): 0=DATA0, 1=DATA1
 #define bUEP_T_TOG        0x40      //  prepared data toggle flag of USB endpoint X transmittal (IN): 0=DATA0, 1=DATA1
@@ -652,53 +550,67 @@ sfr USB_INT_FG      = 0xD8;         //  USB interrupt flag
  sbit U_TOG_OK      = USB_INT_FG^6; //  ReadOnly: indicate current USB transfer toggle is OK
  sbit U_SIE_FREE    = USB_INT_FG^5; //  ReadOnly: indicate USB SIE free status
  sbit UIF_FIFO_OV   = USB_INT_FG^4; //  FIFO overflow interrupt flag for USB, direct bit address clear or write 1 to clear
+ sbit UIF_HST_SOF   = USB_INT_FG^3; //  host SOF timer interrupt flag for USB host, direct bit address clear or write 1 to clear
  sbit UIF_SUSPEND   = USB_INT_FG^2; //  USB suspend or resume event interrupt flag, direct bit address clear or write 1 to clear
  sbit UIF_TRANSFER  = USB_INT_FG^1; //  USB transfer completion interrupt flag, direct bit address clear or write 1 to clear
- sbit UIF_BUS_RST   = USB_INT_FG^0; //  bus reset event interrupt flag, direct bit address clear or write 1 to clear
+ sbit UIF_DETECT    = USB_INT_FG^0; //  device detected event interrupt flag for USB host mode, direct bit address clear or write 1 to clear
+ sbit UIF_BUS_RST   = USB_INT_FG^0; //  bus reset event interrupt flag for USB device mode, direct bit address clear or write 1 to clear
 sfr USB_INT_ST      = 0xD9;         //  ReadOnly: USB interrupt status
-#define bUIS_IS_NAK       0x80      //  ReadOnly: indicate current USB transfer is NAK received
+#define bUIS_IS_NAK       0x80      //  ReadOnly: indicate current USB transfer is NAK received for USB device mode
 #define bUIS_TOG_OK       0x40      //  ReadOnly: indicate current USB transfer toggle is OK
-#define bUIS_TOKEN1       0x20      //  ReadOnly: current token PID code bit 1 received
-#define bUIS_TOKEN0       0x10      //  ReadOnly: current token PID code bit 0 received
-#define MASK_UIS_TOKEN    0x30      //  ReadOnly: bit mask of current token PID code received
+#define bUIS_TOKEN1       0x20      //  ReadOnly: current token PID code bit 1 received for USB device mode
+#define bUIS_TOKEN0       0x10      //  ReadOnly: current token PID code bit 0 received for USB device mode
+#define MASK_UIS_TOKEN    0x30      //  ReadOnly: bit mask of current token PID code received for USB device mode
 #define UIS_TOKEN_OUT     0x00
 #define UIS_TOKEN_SOF     0x10
 #define UIS_TOKEN_IN      0x20
 #define UIS_TOKEN_SETUP   0x30
-//  bUIS_TOKEN1 & bUIS_TOKEN0: current token PID code received
+//  bUIS_TOKEN1 & bUIS_TOKEN0: current token PID code received for USB device mode
 //    00: OUT token PID received
 //    01: SOF token PID received
 //    10: IN token PID received
 //    11: SETUP token PID received
-#define MASK_UIS_ENDP     0x0F      //  ReadOnly: bit mask of current transfer endpoint number
+#define MASK_UIS_ENDP     0x0F      //  ReadOnly: bit mask of current transfer endpoint number for USB device mode
+#define MASK_UIS_H_RES    0x0F      //  ReadOnly: bit mask of current transfer handshake response for USB host mode: 0000=no response, time out from device, others=handshake response PID received
 sfr USB_MIS_ST      = 0xDA;         //  ReadOnly: USB miscellaneous status
+#define bUMS_SOF_PRES     0x80      //  ReadOnly: indicate host SOF timer presage status
+#define bUMS_SOF_ACT      0x40      //  ReadOnly: indicate host SOF timer action status for USB host
 #define bUMS_SIE_FREE     0x20      //  ReadOnly: indicate USB SIE free status
 #define bUMS_R_FIFO_RDY   0x10      //  ReadOnly: indicate USB receiving FIFO ready status (not empty)
 #define bUMS_BUS_RESET    0x08      //  ReadOnly: indicate USB bus reset status
 #define bUMS_SUSPEND      0x04      //  ReadOnly: indicate USB suspend status
+#define bUMS_DM_LEVEL     0x02      //  ReadOnly: indicate UDM level saved at device attached to USB host
+#define bUMS_DEV_ATTACH   0x01      //  ReadOnly: indicate device attached status on USB host
 sfr USB_RX_LEN      = 0xDB;         //  ReadOnly: USB receiving length
 sfr UEP0_CTRL       = 0xDC;         //  endpoint 0 control
 sfr UEP0_T_LEN      = 0xDD;         //  endpoint 0 transmittal length
 sfr UEP4_CTRL       = 0xDE;         //  endpoint 4 control
 sfr UEP4_T_LEN      = 0xDF;         //  endpoint 4 transmittal length
 sfr USB_INT_EN      = 0xE1;         //  USB interrupt enable
-#define bUIE_DEV_SOF      0x80      //  enable interrupt for SOF received
-#define bUIE_DEV_NAK      0x40      //  enable interrupt for NAK responded
+#define bUIE_DEV_SOF      0x80      //  enable interrupt for SOF received for USB device mode
+#define bUIE_DEV_NAK      0x40      //  enable interrupt for NAK responded for USB device mode
 #define bUIE_FIFO_OV      0x10      //  enable interrupt for FIFO overflow
+#define bUIE_HST_SOF      0x08      //  enable interrupt for host SOF timer action for USB host mode
 #define bUIE_SUSPEND      0x04      //  enable interrupt for USB suspend or resume event
 #define bUIE_TRANSFER     0x02      //  enable interrupt for USB transfer completion
-#define bUIE_BUS_RST      0x01      //  enable interrupt for USB bus reset event
+#define bUIE_DETECT       0x01      //  enable interrupt for USB device detected event for USB host mode
+#define bUIE_BUS_RST      0x01      //  enable interrupt for USB bus reset event for USB device mode
 sfr USB_CTRL        = 0xE2;         //  USB base control
+#define bUC_HOST_MODE     0x80      //  enable USB host mode: 0=device mode, 1=host mode
 #define bUC_LOW_SPEED     0x40      //  enable USB low speed: 0=full speed, 1=low speed
 #define bUC_DEV_PU_EN     0x20      //  USB device enable and internal pullup resistance enable
 #define bUC_SYS_CTRL1     0x20      //  USB system control high bit
 #define bUC_SYS_CTRL0     0x10      //  USB system control low bit
 #define MASK_UC_SYS_CTRL  0x30      //  bit mask of USB system control
-//  bUC_SYS_CTRL1 & bUC_SYS_CTRL0: USB system control
-//    00: disable USB device and disable internal pullup resistance
-//    01: enable USB device and disable internal pullup resistance, need external pullup resistance
-//    1x: enable USB device and enable internal pullup resistance
-#define bUC_INT_BUSY      0x08      //  enable automatic responding busy during interrupt flag UIF_TRANSFER valid
+//  bUC_HOST_MODE & bUC_SYS_CTRL1 & bUC_SYS_CTRL0: USB system control
+//    0 00: disable USB device and disable internal pullup resistance
+//    0 01: enable USB device and disable internal pullup resistance, need external pullup resistance
+//    0 1x: enable USB device and enable internal pullup resistance
+//    1 00: enable USB host and normal status
+//    1 01: enable USB host and force UDP/UDM output SE0 state
+//    1 10: enable USB host and force UDP/UDM output J state
+//    1 11: enable USB host and force UDP/UDM output resume or K state
+#define bUC_INT_BUSY      0x08      //  enable automatic responding busy for device mode or automatic pause for host mode during interrupt flag UIF_TRANSFER valid
 #define bUC_RESET_SIE     0x04      //  force reset USB SIE, need software clear
 #define bUC_CLR_ALL       0x02      //  force clear FIFO and count of USB
 #define bUC_DMA_EN        0x01      //  DMA enable and DMA interrupt enable for USB
@@ -744,14 +656,59 @@ sfr UEP0_DMA_H      = 0xED;         //  endpoint 0 buffer start address high byt
 sfr16 UEP1_DMA      = 0xEE;         //  endpoint 1 buffer start address, little-endian
 sfr UEP1_DMA_L      = 0xEE;         //  endpoint 1 buffer start address low byte
 sfr UEP1_DMA_H      = 0xEF;         //  endpoint 1 buffer start address high byte
+// sfr UH_SETUP        = 0xD2;         //  host aux setup
+#define UH_SETUP          UEP1_CTRL
+#define bUH_PRE_PID_EN    0x80      //  USB host PRE PID enable for low speed device via hub
+#define bUH_SOF_EN        0x40      //  USB host automatic SOF enable
+// sfr UH_RX_CTRL      = 0xD4;         //  host receiver endpoint control
+#define UH_RX_CTRL        UEP2_CTRL
+#define bUH_R_TOG         0x80      //  expected data toggle flag of host receiving (IN): 0=DATA0, 1=DATA1
+#define bUH_R_AUTO_TOG    0x10      //  enable automatic toggle after successful transfer completion: 0=manual toggle, 1=automatic toggle
+#define bUH_R_RES         0x04      //  prepared handshake response type for host receiving (IN): 0=ACK (ready), 1=no response, time out to device, for isochronous transactions
+// sfr UH_EP_PID       = 0xD5;         //  host endpoint and token PID, lower 4 bits for endpoint number, upper 4 bits for token PID
+#define UH_EP_PID         UEP2_T_LEN
+#define MASK_UH_TOKEN     0xF0      //  bit mask of token PID for USB host transfer
+#define MASK_UH_ENDP      0x0F      //  bit mask of endpoint number for USB host transfer
+// sfr UH_TX_CTRL      = 0xD6;         //  host transmittal endpoint control
+#define UH_TX_CTRL        UEP3_CTRL
+#define bUH_T_TOG         0x40      //  prepared data toggle flag of host transmittal (SETUP/OUT): 0=DATA0, 1=DATA1
+#define bUH_T_AUTO_TOG    0x10      //  enable automatic toggle after successful transfer completion: 0=manual toggle, 1=automatic toggle
+#define bUH_T_RES         0x01      //  expected handshake response type for host transmittal (SETUP/OUT): 0=ACK (ready), 1=no response, time out from device, for isochronous transactions
+// sfr UH_TX_LEN       = 0xD7;         //  host transmittal endpoint transmittal length
+#define UH_TX_LEN         UEP3_T_LEN
+// sfr UH_EP_MOD       = 0xEB;         //  host endpoint mode
+#define UH_EP_MOD         UEP2_3_MOD
+#define bUH_EP_TX_EN      0x40      //  enable USB host OUT endpoint transmittal
+#define bUH_EP_TBUF_MOD   0x10      //  buffer mode of USB host OUT endpoint
+//  bUH_EP_TX_EN & bUH_EP_TBUF_MOD: USB host OUT endpoint buffer mode, buffer start address is UH_TX_DMA
+//    0 x:  disable endpoint and disable buffer
+//    1 0:  64 bytes buffer for transmittal (OUT endpoint)
+//    1 1:  dual 64 bytes buffer by toggle bit bUH_T_TOG selection for transmittal (OUT endpoint), total=128bytes
+#define bUH_EP_RX_EN      0x08      //  enable USB host IN endpoint receiving
+#define bUH_EP_RBUF_MOD   0x01      //  buffer mode of USB host IN endpoint
+//  bUH_EP_RX_EN & bUH_EP_RBUF_MOD: USB host IN endpoint buffer mode, buffer start address is UH_RX_DMA
+//    0 x:  disable endpoint and disable buffer
+//    1 0:  64 bytes buffer for receiving (IN endpoint)
+//    1 1:  dual 64 bytes buffer by toggle bit bUH_R_TOG selection for receiving (IN endpoint), total=128bytes
+// sfr16 UH_RX_DMA     = 0xE4;         //  host rx endpoint buffer start address, little-endian
+#define UH_RX_DMA         UEP2_DMA
+// sfr UH_RX_DMA_L     = 0xE4;         //  host rx endpoint buffer start address low byte
+#define UH_RX_DMA_L       UEP2_DMA_L
+// sfr UH_RX_DMA_H     = 0xE5;         //  host rx endpoint buffer start address high byte
+#define UH_RX_DMA_H       UEP2_DMA_H
+// sfr16 UH_TX_DMA     = 0xE6;         //  host tx endpoint buffer start address, little-endian
+#define UH_TX_DMA         UEP3_DMA
+// sfr UH_TX_DMA_L     = 0xE6;         //  host tx endpoint buffer start address low byte
+#define UH_TX_DMA_L       UEP3_DMA_L
+// sfr UH_TX_DMA_H     = 0xE7;         //  host tx endpoint buffer start address high byte
+#define UH_TX_DMA_H       UEP3_DMA_H
 
 /*----- XDATA: xRAM ------------------------------------------*/
 
 #define XDATA_RAM_SIZE    0x0400    //  size of expanded xRAM, xdata SRAM embedded chip
 
 /*----- Reference Information --------------------------------------------*/
-#define ID_CH552          0x52      //  chip ID
-#define ID_CH551          0x51      //  chip ID
+#define ID_CH554          0x54      //  chip ID
 
 /* Interrupt routine address and interrupt number */
 #define INT_ADDR_INT0     0x0003    //  interrupt vector address for INT0
@@ -810,18 +767,10 @@ ASM example:
        DJNZ R7,LOOP
 */
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif  //  __CH552_H__
+#endif  //  __CH554_H__
 
 #ifndef __USB_DEF__
 #define __USB_DEF__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*----- USB constant and structure define --------------------------------*/
 
@@ -992,6 +941,8 @@ extern "C" {
 #define USB_BO_CSW_SIG3         0x53
 #endif
 
+#if 0
+
 typedef struct _USB_SETUP_REQ {
     UINT8 bRequestType;
     UINT8 bRequest;
@@ -1143,8 +1094,8 @@ typedef struct _UDISK_BOC_CSW {         /* status of BulkOnly USB-FlashDisk */
 
 typedef UDISK_BOC_CSW xdata *PXUDISK_BOC_CSW;
 
-#ifdef __cplusplus
-}
 #endif
 
 #endif  //  __USB_DEF__
+
+$RESTORE

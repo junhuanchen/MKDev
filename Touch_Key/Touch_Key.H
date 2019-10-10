@@ -1,10 +1,10 @@
 
-#define INTERRUPT_TouchKey   0   //¿ªÆôTouchKeyÖÐ¶Ï·½Ê½
+#define INTERRUPT_TouchKey   0   // ï¿½ï¿½ï¿½ï¿½TouchKeyï¿½Ð¶Ï·ï¿½Ê½
 
 /*******************************************************************************
 * Function Name  : TouchKeyQueryCylSet(UINT8 cyl)
-* Description    : ´¥Ãþ°´¼ü²éÑ¯ÖÜÆÚÉèÖÃ
-* Input          : UINT8 cyl Ê±ÖÓÉèÖÃ                  								
+* Description    : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Input          : UINT8 cyl Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                  								
                    1   2ms
                    0   1ms									 
 * Output         : None 
@@ -14,11 +14,11 @@ void TouchKeyQueryCylSet1Or2ms(UINT8 cyl);
 
 /*******************************************************************************
 * Function Name  : TouchKeyChanelSelect(UINT8 ch)
-* Description    : ´¥Ãþ°´¼üÍ¨µÀÑ¡Ôñ
-* Input          : UINT8 ch ²ÉÓÃÍ¨µÀ
+* Description    : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Ñ¡ï¿½ï¿½
+* Input          : UINT8 ch ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
 * Output         : None
-* Return         : ³É¹¦ SUCCESS
-                   Ê§°Ü FAIL
+* Return         : ï¿½É¹ï¿½ SUCCESS
+                   Ê§ï¿½ï¿½ FAIL
 *******************************************************************************/
 UINT8 TouchKeyChanelSelect(UINT8 ch);
 

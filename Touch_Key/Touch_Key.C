@@ -4,7 +4,7 @@
 * Author             : WCH
 * Version            : V1.0
 * Date               : 2017/01/20
-* Description        : CH554 ´¥Ãþ°´¼ü²ÉÑù¼ä¸ôÉèÖÃ¡¢Í¨µÀÑ¡ÔñºÍÇÐ»»ºÍÖÐ¶Ï´¦Àíº¯Êý   
+* Description        : CH554 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½Í¨ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½Ð¶Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
 *******************************************************************************/
 
 #include "..\Public\CH554.H"                                                       
@@ -16,8 +16,8 @@
 
 /*******************************************************************************
 * Function Name  : TouchKeyQueryCylSet1Or2ms(UINT8 cyl)
-* Description    : ´¥Ãþ°´¼ü²éÑ¯ÖÜÆÚÉèÖÃ
-* Input          : UINT8 cyl Ê±ÖÓÉèÖÃ                  								
+* Description    : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Input          : UINT8 cyl Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½                  								
                    1   2ms
                    0   1ms									 
 * Output         : None
@@ -37,26 +37,26 @@ void TouchKeyQueryCylSet1Or2ms(UINT8 cyl)
 
 /*******************************************************************************
 * Function Name  : TouchKeyChanelSelect(UINT8 ch)
-* Description    : ´¥Ãþ°´¼üÍ¨µÀÑ¡Ôñ
-* Input          : UINT8 ch ²ÉÓÃÍ¨µÀ
+* Description    : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Ñ¡ï¿½ï¿½
+* Input          : UINT8 ch ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
 * Output         : None
-* Return         : ³É¹¦ SUCCESS
-                   Ê§°Ü FAIL
+* Return         : ï¿½É¹ï¿½ SUCCESS
+                   Ê§ï¿½ï¿½ FAIL
 *******************************************************************************/
 UINT8 TouchKeyChanelSelect(UINT8 ch)
 {
     TKEY_CTRL &= 0xF8;
-    if(ch == 0){;}                                                            //¹Ø±ÕµçÈÝ¼ì²â£¬½ö×÷1ms»òÕß2ms¶¨Ê±ÖÐ¶Ï
-    else if(ch == 1){P1_DIR_PU &= 0xFE; TKEY_CTRL |= 0x01;}                   //TIN0(P10)
-    else if(ch == 2){P1_DIR_PU &= 0xFD; TKEY_CTRL |= 0x02;}                   //TIN0(P11)
-    else if(ch == 3){P1_DIR_PU &= 0xEF; TKEY_CTRL |= 0x03;}                   //TIN0(P14)
-    else if(ch == 4){P1_DIR_PU &= 0xDF; TKEY_CTRL |= 0x04;}                   //TIN0(P15)
-    else if(ch == 5){P1_DIR_PU &= 0xBF; TKEY_CTRL |= 0x05;}                   //TIN0(P16)
-    else if(ch == 6){P1_DIR_PU &= 0x7F; TKEY_CTRL |= 0x06;}                   //TIN0(P17)
-    else if(ch == 7){TKEY_CTRL |= 0x07;}                                      //¿ªÆôµçÈÝ¼ì²â£¬µ«ÊÇ²»Á¬½ÓÍ¨µÀ
+    if(ch == 0){;}                                                            // ï¿½Ø±Õµï¿½ï¿½Ý¼ï¿½â£¬ï¿½ï¿½ï¿½ï¿½1msï¿½ï¿½ï¿½ï¿½2msï¿½ï¿½Ê±ï¿½Ð¶ï¿½
+    else if(ch == 1){P1_DIR_PU &= 0xFE; TKEY_CTRL |= 0x01;}                   // TIN0(P10)
+    else if(ch == 2){P1_DIR_PU &= 0xFD; TKEY_CTRL |= 0x02;}                   // TIN0(P11)
+    else if(ch == 3){P1_DIR_PU &= 0xEF; TKEY_CTRL |= 0x03;}                   // TIN0(P14)
+    else if(ch == 4){P1_DIR_PU &= 0xDF; TKEY_CTRL |= 0x04;}                   // TIN0(P15)
+    else if(ch == 5){P1_DIR_PU &= 0xBF; TKEY_CTRL |= 0x05;}                   // TIN0(P16)
+    else if(ch == 6){P1_DIR_PU &= 0x7F; TKEY_CTRL |= 0x06;}                   // TIN0(P17)
+    else if(ch == 7){TKEY_CTRL |= 0x07;}                                      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¼ï¿½â£¬ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
     else return FAIL;
 #if INTERRUPT_TouchKey
-    IE_TKEY = 1;                                                               //Ê¹ÄÜTouch_KeyÖÐ¶Ï
+    IE_TKEY = 1;                                                               // Ê¹ï¿½ï¿½Touch_Keyï¿½Ð¶ï¿½
 #endif
     return SUCCESS;
 }
@@ -64,13 +64,13 @@ UINT8 TouchKeyChanelSelect(UINT8 ch)
 #if INTERRUPT_TouchKey
 /*******************************************************************************
 * Function Name  : Touch_KeyInterrupt(void)
-* Description    : Touch_Key ÖÐ¶Ï·þÎñ³ÌÐò
+* Description    : Touch_Key ï¿½Ð¶Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 *******************************************************************************/
-void	Touch_KeyInterrupt( void ) interrupt INT_NO_TKEY using 1                //Touch_KeyÖÐ¶Ï·þÎñ³ÌÐò,Ê¹ÓÃ¼Ä´æÆ÷×é1
+void	Touch_KeyInterrupt( void ) interrupt INT_NO_TKEY using 1                // Touch_Keyï¿½Ð¶Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ê¹ï¿½Ã¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½1
 { 
     UINT16 KeyData;
-    IE_TKEY = 0;                                                              //¹ØÖÐ¶Ï	
-    KeyData = TKEY_DAT;                                                       //±£³Ö87us,¾¡¿ìÈ¡×ß
+    IE_TKEY = 0;                                                              // ï¿½ï¿½ï¿½Ð¶ï¿½	
+    KeyData = TKEY_DAT;                                                       // ï¿½ï¿½ï¿½ï¿½87us,ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½
 #ifdef DE_PRINTF
       printf("DATA: %04x\n",KeyData&0x7FFF);
 #endif
