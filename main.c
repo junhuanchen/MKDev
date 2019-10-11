@@ -41,7 +41,7 @@ void CheckUsbState()
 
 void main(void)
 {
-  UINT8 pData[4];
+  // UINT8 pData[4];
   InitMkDev();
 
   // tmp = res & 0x1 == 0x1;

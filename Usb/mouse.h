@@ -22,20 +22,19 @@ static void SendMouseToUsb(UINT8 *pData, UINT8 len)
 
 UINT8 MouseBYTE[] = {0x00, 0x00, 0x00, 0x00};
 
-void MouseLeftClick(UINT8 Bytes, UINT8 interval)
+void MouseLeftClick(UINT8 *Bytes, UINT8 interval)
 {
   Bytes[0] = 1;
   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
   // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
-  mDelaymS(100);
+  mDelaymS(interval);
 
   Bytes[0] = 0;
   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
   // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
-  mDelaymS(100);
 }
 
-void MouseMove(UINT8 Bytes, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系
+void MouseMove(UINT8 *Bytes, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系
 {
   Bytes[1] += X;
   Bytes[2] += Y;
@@ -43,7 +42,7 @@ void MouseMove(UINT8 Bytes, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系
   disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
 }
 
-void MouseScroll(UINT8 Bytes, UINT8 Value) // 上 0x01 ， 下 0xFF，停止 0x80
+void MouseScroll(UINT8 *Bytes, UINT8 Value) // 上 0x01 ， 下 0xFF，停止 0x80
 {
   Bytes[3] += Value;
   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
