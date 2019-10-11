@@ -12,6 +12,7 @@
 
 #include "CH552.H"
 #include "System.H"
+#include <stdio.h>
 
 /*******************************************************************************
 * Function Name  : CfgFsys( )
@@ -279,4 +280,30 @@ void CH554WDTModeSelect(UINT8 mode)
 void CH554WDTFeed(UINT8 tim)
 {
     WDOG_COUNT = tim; // 看门狗计数器赋值
+}
+
+UINT8 HexToAscii(UINT8 hex)
+{
+    if (hex <= 9)
+    {
+        hex += '0';
+    }
+    else if (hex >= 10 && hex <= 15)
+    {
+        hex += 'A' - 10;
+    }
+
+    return hex;
+}
+
+void disp_bytes(UINT8 *byte, UINT8 len)
+{
+  int i = 0;
+  LOG("disp_bytes ");
+  for (i = 0; i < len; i++)
+  {
+      
+    LOG("%c%c ", HexToAscii((byte[i] >> 4) & 0x0f), HexToAscii(byte[i] & 0x0f));
+  }
+  LOG("\r\n");
 }

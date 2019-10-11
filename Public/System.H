@@ -26,6 +26,7 @@
 
 #define LOG printf
 
+
 #define FREQ_SYS 12000000 // 系统主频12MHz
 #ifndef UART0_BUAD
 #define UART0_BUAD 57600
@@ -46,4 +47,9 @@ void CH554UART1SendByte(UINT8 SendDat); // CH554UART1发送一个字节
 
 void CH554WDTModeSelect(UINT8 mode); // CH554看门狗模式设置
 void CH554WDTFeed(UINT8 tim);        // CH554看门狗喂狗
+
+extern UINT8 HexToAscii(UINT8 hex);
+
+void disp_bytes(UINT8 *byte, UINT8 len); // 显示字节数
+
 #endif

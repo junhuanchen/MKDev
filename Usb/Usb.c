@@ -3,7 +3,7 @@
 
 #include ".\Public\Type.h"
 #include ".\Public\CH552.H"
-#include ".\Public\System.h"  
+#include ".\Public\System.h"
 #include ".\Public\Mcu.h"
 
 #include "UsbDef.h"
@@ -56,19 +56,21 @@ void CH554USBDevWakeup()
     UDEV_CTRL &= ~bUD_LOW_SPEED;
 }
 
-static UINT8 HexToAscii(UINT8 hex)
-{
-    if (hex <= 9)
-    {
-        hex += '0';
-    }
-    else if (hex >= 10 && hex <= 15)
-    {
-        hex += 'A' - 10;
-    }
+extern UINT8 HexToAscii(UINT8 hex);
 
-    return hex;
-}
+// UINT8 HexToAscii(UINT8 hex)
+// {
+//     if (hex <= 9)
+//     {
+//         hex += '0';
+//     }
+//     else if (hex >= 10 && hex <= 15)
+//     {
+//         hex += 'A' - 10;
+//     }
+
+//     return hex;
+// }
 
 //for unique serial no
 static void InitSerialString()
@@ -191,6 +193,8 @@ void Enp1IntIn(UINT8 *dat, UINT8 size)
     memcpy(Ep1Buffer, dat, size);
     UEP1_T_LEN = size;
     UEP1_CTRL = UEP1_CTRL & ~MASK_UEP_T_RES | UEP_T_RES_ACK; //有数据时上传数据并应答ACK
+    while ((UEP1_CTRL & MASK_UEP_T_RES) == UEP_T_RES_ACK)
+        ; //  Waiting upload complete, avoid overwriting
 }
 /*******************************************************************************
 * Function Name  : Enp2IntIn()
@@ -204,6 +208,8 @@ void Enp2IntIn(UINT8 *dat, UINT8 size)
     memcpy(Ep2Buffer, dat, size);
     UEP2_T_LEN = size;
     UEP2_CTRL = UEP2_CTRL & ~MASK_UEP_T_RES | UEP_T_RES_ACK; //有数据时上传数据并应答ACK
+    while ((UEP2_CTRL & MASK_UEP_T_RES) == UEP_T_RES_ACK)
+        ; //  Waiting upload complete, avoid overwriting
 }
 
 /*******************************************************************************

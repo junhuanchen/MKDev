@@ -29,4 +29,3 @@ extern const DescriptorData StringDescriptors[4];
 extern UINT8X StringSerial[];
 
 #endif
-

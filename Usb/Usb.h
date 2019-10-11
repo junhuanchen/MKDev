@@ -21,4 +21,3 @@ extern void Enp1IntIn(UINT8 *dat, UINT8 size);
 extern void Enp2IntIn(UINT8 *dat, UINT8 size);
 
 #endif
-
