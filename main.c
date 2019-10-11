@@ -20,9 +20,9 @@
 
 void InitMkDev()
 {
-  CfgFsys();             // Configure sys
-  mDelaymS(5);           //
-  mInitSTDIO();          //  Init UART0
+  CfgFsys();    // Configure sys
+  mDelaymS(5);  //
+  mInitSTDIO(); //  Init UART0
 
   // CH554WDTModeSelect(1); // Start WDT
 
@@ -39,11 +39,6 @@ void CheckUsbState()
   }
 }
 
-static void SendMouseToUsb(UINT8 *pData, UINT8 len)
-{
-  Enp2IntIn(pData, len);
-}
-
 void main(void)
 {
   UINT8 pData[4];
@@ -54,20 +49,33 @@ void main(void)
 
   // usb_key_unit_test();
 
+  // memset(pData, 0, sizeof(pData));
+
+  // pData[0] = 01;
+  // pData[1] = 00;
+  // pData[2] = 01;
+  // pData[3] = 00;
+  // pData[4] = 00;
+
+  // MouseBYTE[3] = 1;
   while (1)
   {
     CheckUsbState();
+
     mDelaymS(500);
 
-    memset(pData, 0, sizeof(pData));
+    // MouseBYTE[1] += 1;
+    // MouseBYTE[2] += 1;
 
-    pData[0] = 01;
-    pData[1] = 00;
-    pData[2] = 01;
-    pData[3] = 20;
+    // MouseBYTE[0] = 1;
+    // SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
+    // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
 
-    SendMouseToUsb(pData, MOUSE_LEN);
-    disp_bytes((char *)pData, sizeof(pData));
+    // mDelaymS(100);
+
+    // MouseBYTE[0] = 0;
+    // SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
+    // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
 
     // continue;
 
