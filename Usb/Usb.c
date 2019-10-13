@@ -1,5 +1,6 @@
 
 #include <string.h>
+#include <stdio.h>
 
 #include ".\Public\Type.h"
 #include ".\Public\CH552.H"
@@ -15,6 +16,13 @@
 static UINT8X Ep0Buffer[8 > (THIS_ENDP0_SIZE + 2) ? 8 : (THIS_ENDP0_SIZE + 2)] _at_ 0x0000;   //端点0 OUT&IN缓冲区，必须是偶地址
 static UINT8X Ep1Buffer[64 > (MAX_PACKET_SIZE + 2) ? 64 : (MAX_PACKET_SIZE + 2)] _at_ 0x000a; //端点1 IN缓冲区,必须是偶地址
 static UINT8X Ep2Buffer[64 > (MAX_PACKET_SIZE + 2) ? 64 : (MAX_PACKET_SIZE + 2)] _at_ 0x0050; //端点2 IN缓冲区,必须是偶地址
+
+static UINT8X Ep3Buffer[2 * (MAX_PACKET_SIZE + 2)] _at_ 0x00D4; //端点3 IN & OUT 缓冲区
+
+#define EP3_SIZE MAX_PACKET_SIZE
+#define EP3_RX_BUF (Ep3Buffer)
+#define EP3_TX_BUF (Ep3Buffer + EP3_SIZE)
+
 static UINT8 SetupReq, SetupLen, UsbConfig;
 
 static BOOL PCSleeped = FALSE;
@@ -116,6 +124,8 @@ static void InitSerialString()
 *******************************************************************************/
 void USBDeviceInit()
 {
+    memset(Ep1Buffer,0,sizeof(Ep1Buffer)), memset(Ep2Buffer,0,sizeof(Ep2Buffer)), memset(Ep3Buffer,0,sizeof(Ep3Buffer));
+
     InitSerialString();
 
     IE_USB = 0;
@@ -136,6 +146,10 @@ void USBDeviceInit()
     UEP2_3_MOD = UEP2_3_MOD & ~bUEP2_BUF_MOD | bUEP2_TX_EN; //端点2发送使能 64字节缓冲区
     UEP2_CTRL = bUEP_AUTO_TOG | UEP_T_RES_NAK;              //端点2自动翻转同步标志位，IN事务返回NAK
 
+    UEP3_DMA = (UINT16)Ep3Buffer;                           //端点2数据传输地址
+    UEP2_3_MOD = UEP2_3_MOD & ~bUEP3_BUF_MOD | bUEP3_TX_EN | bUEP3_RX_EN; //端点2发送使能 64字节缓冲区
+    UEP3_CTRL = bUEP_AUTO_TOG | UEP_T_RES_NAK | UEP_R_RES_ACK;
+
     USB_DEV_AD = 0x00;
     UDEV_CTRL = bUD_PD_DIS;                               // 禁止DP/DM下拉电阻
     USB_CTRL = bUC_DEV_PU_EN | bUC_INT_BUSY | bUC_DMA_EN; // 启动USB设备及DMA，在中断期间中断标志未清除前自动返回NAK
@@ -145,8 +159,10 @@ void USBDeviceInit()
 
     UEP1_T_LEN = 0; //预使用发送长度一定要清空
     UEP2_T_LEN = 0; //预使用发送长度一定要清空
+    UEP3_T_LEN = 0;
 
-    IE_USB = 1;
+    IE_USB = 1;	//Enable USB interrupt
+    LOG("USBDeviceInit\r\n");
 }
 
 UINT8 GetKeyboardLedStatus()
@@ -196,6 +212,7 @@ void Enp1IntIn(UINT8 *dat, UINT8 size)
     while ((UEP1_CTRL & MASK_UEP_T_RES) == UEP_T_RES_ACK)
         ; //  Waiting upload complete, avoid overwriting
 }
+
 /*******************************************************************************
 * Function Name  : Enp2IntIn()
 * Description    : USB设备模式端点2的中断上传
@@ -212,6 +229,15 @@ void Enp2IntIn(UINT8 *dat, UINT8 size)
         ; //  Waiting upload complete, avoid overwriting
 }
 
+void Enp3IntIn(UINT8 *dat, UINT8 size)
+{
+    memcpy(EP3_TX_BUF, dat, size);
+    UEP3_T_LEN = size;
+    UEP3_CTRL = UEP3_CTRL & ~MASK_UEP_T_RES | UEP_T_RES_ACK; //有数据时上传数据并应答ACK
+    while ((UEP3_CTRL & MASK_UEP_T_RES) == UEP_T_RES_ACK)
+        ; //  Waiting upload complete, avoid overwriting
+}
+
 /*******************************************************************************
 * Function Name  : DeviceInterrupt()
 * Description    : CH559USB中断处理函数
@@ -219,10 +245,16 @@ void Enp2IntIn(UINT8 *dat, UINT8 size)
 void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
 {
     UINT8 len = 0;
+    
     if (UIF_TRANSFER) //USB传输完成标志
     {
         switch (USB_INT_ST & (MASK_UIS_TOKEN | MASK_UIS_ENDP))
         {
+        case UIS_TOKEN_IN | 3:                                       //endpoint 3# 中断端点上传
+            UEP3_T_LEN = 0;                                          //预使用发送长度一定要清空
+                                                                        //            UEP2_CTRL ^= bUEP_T_TOG;                                          //如果不设置自动翻转则需要手动翻转
+            UEP3_CTRL = UEP3_CTRL & ~MASK_UEP_T_RES | UEP_T_RES_NAK; //默认应答NAK
+            break;
         case UIS_TOKEN_IN | 2:                                       //endpoint 2# 中断端点上传
             UEP2_T_LEN = 0;                                          //预使用发送长度一定要清空
                                                                      //          UEP1_CTRL ^= bUEP_T_TOG;                                          //如果不设置自动翻转则需要手动翻转
@@ -278,12 +310,12 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
                     switch (SetupReq) //请求码
                     {
                     case USB_GET_DESCRIPTOR:
+
                         switch (UsbSetupBuf->wValueH)
                         {
                         case USB_DESCR_TYP_DEVICE:  //设备描述符
                             pDescr = DevDesc.descr; //把设备描述符送到要发送的缓冲区
                             len = DevDesc.size;
-
                             //restart enumeration
                             Ready = FALSE;
 
@@ -300,6 +332,7 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
                             break;
 
                         case USB_DESCR_TYP_REPORT:         //报表描述符
+
                             if (UsbSetupBuf->wIndexL == 0) //接口0报表描述符
                             {
                                 pDescr = KeyRepDesc.descr; //数据准备上传
@@ -309,11 +342,17 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
                             {
                                 pDescr = MouseRepDesc.descr; //数据准备上传
                                 len = MouseRepDesc.size;
+                                // Ready = TRUE; //如果有更多接口，该标准位应该在最后一个接口配置完成后有效
+                            }
+                            else if (UsbSetupBuf->wIndexL == 2) //接口2报表描述符
+                            {
+                                pDescr = VendorRepDesc.descr; //数据准备上传
+                                len = VendorRepDesc.size;
                                 Ready = TRUE; //如果有更多接口，该标准位应该在最后一个接口配置完成后有效
                             }
                             else
                             {
-                                len = 0xFF; //本程序只有2个接口，这句话正常不可能执行
+                                len = 0xFF; //本程序只有3个接口，这句话正常不可能执行
                             }
                             break;
 
@@ -367,6 +406,12 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
                         {
                             switch (UsbSetupBuf->wIndexL)
                             {
+                            case 0x83:
+                                UEP3_CTRL = UEP3_CTRL & ~(bUEP_T_TOG | MASK_UEP_T_RES) | UEP_T_RES_NAK;
+                                break;
+                            case 0x03:
+                                UEP3_CTRL = UEP3_CTRL & ~(bUEP_R_TOG | MASK_UEP_R_RES) | UEP_R_RES_ACK;
+                                break;
                             case 0x82:
                                 UEP2_CTRL = UEP2_CTRL & ~(bUEP_T_TOG | MASK_UEP_T_RES) | UEP_T_RES_NAK;
                                 break;
@@ -421,6 +466,12 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
                             {
                                 switch (((UINT16)UsbSetupBuf->wIndexH << 8) | UsbSetupBuf->wIndexL)
                                 {
+                                case 0x83:
+                                    UEP3_CTRL = UEP3_CTRL & (~bUEP_T_TOG) | UEP_T_RES_STALL;
+                                    break;
+                                case 0x03:
+                                    UEP3_CTRL = UEP3_CTRL & (~bUEP_R_TOG) | UEP_R_RES_STALL;
+                                    break;	
                                 case 0x82:
                                     UEP2_CTRL = UEP2_CTRL & (~bUEP_T_TOG) | UEP_T_RES_STALL; /* 设置端点2 IN STALL */
                                     break;
@@ -526,6 +577,12 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
             UEP0_CTRL ^= bUEP_R_TOG; //同步标志位翻转
             break;
 
+        case UIS_TOKEN_OUT | 3: // endpoint3 OUT
+            len = MAX_PACKET_SIZE;
+
+            UEP3_CTRL ^= bUEP_R_TOG; //同步标志位翻转
+            break;
+
         default:
             break;
         }
@@ -537,6 +594,7 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
         UEP0_CTRL = UEP_R_RES_ACK | UEP_T_RES_NAK;
         UEP1_CTRL = bUEP_AUTO_TOG | UEP_R_RES_ACK;
         UEP2_CTRL = bUEP_AUTO_TOG | UEP_R_RES_ACK | UEP_T_RES_NAK;
+		UEP3_CTRL = bUEP_AUTO_TOG | UEP_R_RES_ACK | UEP_T_RES_NAK;
         USB_DEV_AD = 0x00;
         UIF_SUSPEND = 0;
         UIF_TRANSFER = 0;
@@ -575,4 +633,24 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
         USB_INT_FG = 0xFF; //清中断标志
                            //      TRACE("UnknownInt  N");
     }
+}
+
+void unit_test_hid_data()
+{
+	int i = 0;
+    LOG("EP3_RX_BUF\r\n");
+
+    disp_bytes(EP3_RX_BUF, EP3_SIZE);
+    
+    for (i = 0; i < EP3_SIZE; i++)
+    {
+        EP3_RX_BUF[i] = EP3_RX_BUF[i] + 1;
+    }
+    
+    Enp3IntIn(EP3_RX_BUF, EP3_SIZE);
+    
+    LOG("EP3_TX_BUF\r\n");
+
+    disp_bytes(EP3_TX_BUF, EP3_SIZE);
+
 }

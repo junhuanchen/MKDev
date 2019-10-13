@@ -51,18 +51,14 @@ void main(void)
 
   // memset(pData, 0, sizeof(pData));
 
-  // pData[0] = 01;
-  // pData[1] = 00;
-  // pData[2] = 01;
-  // pData[3] = 00;
-  // pData[4] = 00;
-
   // MouseBYTE[3] = 1;
   while (1)
   {
     CheckUsbState();
 
-    mDelaymS(500);
+    mDelaymS(1000);
+
+    unit_test_hid_data();
 
     // MouseBYTE[1] += 1;
     // MouseBYTE[2] += 1;

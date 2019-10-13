@@ -10,7 +10,7 @@ static UINT8C _DevDesc[] =
 	{
 		0x12,				  /*bLength */
 		USB_DESCR_TYP_DEVICE, /*bDescriptorType*/
-		0x00, 0x02,			  /*bcdUSB */
+		0x10, 0x01,			  /*bcdUSB */
 		0x00,				  /*bDeviceClass*/
 		0x00,				  /*bDeviceSubClass*/
 		0x00,				  /*bDeviceProtocol*/
@@ -130,17 +130,62 @@ const DescriptorData MouseRepDesc =
 
 		sizeof(_MouseRepDesc)};
 
+static UINT8C _VendorRepDesc[] = {
+	0x06, 0xA0, 0xFF, // Usage Page(FFA0h, vendor defined)
+	0x09, 0x01,		  // Usage(vendor defined)
+	0xA1, 0x01,		  // Collection(Application)
+	0x09, 0x02,		  // Usage(vendor defined)
+	0xA1, 0x00,		  // Collection(Physical)
+	0x06, 0xA1, 0xFF, // Usage Page(vendor defined)
+
+	// Input Report
+	0x09, 0x03, // Usage(vendor defined)
+	0x09, 0x04, // Usage(vendor defined)
+	0x15, 0x80, // Logical Minimum(0x80 or -128)
+	0x25, 0x7F, // Logical Maximum(0x7F or 127)
+	0x35, 0x00, // Physical Minimum(0)
+	0x45, 0xFF, // Physical Maximum(255)
+	0x75, 0x08, // Report size(8 Bits, 1 Byte)
+	0x95, 0x40, // Report count(64 fields)
+	0x81, 0x02, // Input(data, variable, absolute)
+	// Output Report
+	0x09, 0x05, // Usage(vendor defined)
+	0x09, 0x06, // Usage(vendor defined)
+	0x15, 0x80, // Logical Minimum(0x80 or -128)
+	0x25, 0x7F, // Logical Maximum(0x7F or 127)
+	0x35, 0x00, // Physical Minimum(0)
+	0x45, 0xFF, // Physical Maximum(255)
+	0x75, 0x08, // Report size(8 Bits, 1 Byte)
+	0x95, 0x40, // Report count(64 fields)
+	0x91, 0x02, // Output(data, variable, absolute)
+	0xC0,		//End Collection(Physical)
+	0xC0		//End Collection(Application)
+};
+
+/* Vendor report descriptor */
+const DescriptorData VendorRepDesc =
+	{
+		_VendorRepDesc,
+
+		sizeof(_VendorRepDesc)};
+
 #define TOTAL_CONFIG_DESCR_SIZE sizeof(USB_CFG_DESCR) +      \
 									sizeof(USB_ITF_DESCR) +  \
 									sizeof(USB_HID_DESCR) +  \
 									sizeof(USB_ENDP_DESCR) + \
 									sizeof(USB_ITF_DESCR) +  \
 									sizeof(USB_HID_DESCR) +  \
+									sizeof(USB_ENDP_DESCR) + \
+									sizeof(USB_ITF_DESCR) +  \
+									sizeof(USB_HID_DESCR) +  \
+									sizeof(USB_ENDP_DESCR) +  \
 									sizeof(USB_ENDP_DESCR)
 
 #define KEYBOARD_REPORT_DESCR_SIZE sizeof(_KeyRepDesc)
 
 #define MOUSE_REPORT_DESCR_SIZE sizeof(_MouseRepDesc)
+
+#define VENDOR_REPORT_DESCR_SIZE sizeof(_VendorRepDesc)
 
 /* configuration descriptor */
 static UINT8C _CfgDesc[] =
@@ -148,12 +193,12 @@ static UINT8C _CfgDesc[] =
 		0x09,																   /* bLength: Configuation Descriptor size */
 		USB_DESCR_TYP_CONFIG,												   /* bDescriptorType: Configuration */
 		TOTAL_CONFIG_DESCR_SIZE & 0xff, (TOTAL_CONFIG_DESCR_SIZE >> 8) & 0xff, /* wTotalLength: Bytes returned */
-		0x02,																   /*bNumInterfaces: 2 interface*/
+		USB_INTERFACES,																   /*bNumInterfaces: 3 interface*/
 		0x01,																   /*bConfigurationValue: Configuration value*/
 		0x00,																   /*iConfiguration: Index of string descriptor describing
                                      the configuration*/
 		0x80 | (1 << 6) | (1 << 5),											   /*bmAttributes: self powered, remote wakeup */
-		100 / 2,															   /*MaxPower 100 mA: this current is used for detecting Vbus*/
+		0x32,															   /*MaxPower 100 mA: this current is used for detecting Vbus*/
 
 		/************** Descriptor of keyboard interface ****************/
 		0x09,				  /*bLength: Interface Descriptor size*/
@@ -208,8 +253,58 @@ static UINT8C _CfgDesc[] =
 		USB_DESCR_TYP_ENDP,									   /*bDescriptorType:*/
 		0x82,												   /*bEndpointAddress: Endpoint Address (IN)*/
 		0x03,												   /*bmAttributes: Interrupt endpoint*/
-		MAX_PACKET_SIZE & 0xff, (MAX_PACKET_SIZE >> 8) & 0xff, /*wMaxPacketSize: 32 Byte max */
-		0x0a												   /*bInterval: Polling Interval (10 ms)*/
+		MAX_PACKET_SIZE & 0xff, (MAX_PACKET_SIZE >> 8) & 0xff, /*wMaxPacketSize: 64 Byte max */
+		0x0a,												   /*bInterval: Polling Interval (10 ms)*/
+
+		/************** Descriptor of vendor interface ****************/
+		// Interface descriptor (Vendor-defined)
+		0x09,				  // Length of the descriptor
+		USB_DESCR_TYP_INTERF, // Type: Interface Descriptor
+		0x02,				  // Interface ID
+		0x00,				  // Alternate setting
+		0x02,				  // Number of Endpoints
+		0x03,				  // Interface class code
+		0x01,				  // Subclass code 0=No subclass, 1=Boot Interface subclass
+		0x00,				  // Protocol code 0=None, 1=Keyboard, 2=Mouse
+		0x00,				  // Index of corresponding string descriptor (On Windows, it is called "Bus reported device description")
+
+		/******************** Descriptor of Vendor HID ********************/
+		// HID descriptor (Vendor-defined)
+		0x09,			   // Length of the descriptor
+		USB_DESCR_TYP_HID, // Type: HID Descriptor
+		0x10, 0x01,		   // bcdHID: HID Class Spec release number
+		0x00,			   // bCountryCode: Hardware target country
+		0x01,			   // bNumDescriptors: Number of HID class descriptors to follow
+		0x22,			   // bDescriptorType
+		// wItemLength: Total length of Report descriptor
+		VENDOR_REPORT_DESCR_SIZE & 0xff, (VENDOR_REPORT_DESCR_SIZE >> 8) & 0xff,
+
+		// Endpoint descriptor (Vendor-defined)	// EP3, IN
+		0x07,		// Length of the descriptor
+		0x05,		// Type: Endpoint Descriptor
+		0x83,		// Endpoint: D7: 0-Out 1-In, D6-D4=0, D3-D0 Endpoint number
+		0x03,		// Attributes:
+					// D1:0 Transfer type: 00 = Control 01 = Isochronous 10 = Bulk 11 = Interrupt
+					// 			The following only apply to isochronous endpoints. Else set to 0.
+					// D3:2 Synchronisation Type: 00 = No Synchronisation 01 = Asynchronous 10 = Adaptive 11 = Synchronous
+					// D5:4	Usage Type: 00 = Data endpoint 01 = Feedback endpoint 10 = Implicit feedback Data endpoint 11 = Reserved
+					// D7:6 = 0
+		0x40, 0x00, // Maximum packet size can be handled
+		0x18,		// Interval for polling, in units of 1 ms for low/full speed
+
+		// Endpoint descriptor (Vendor-defined)	// EP3, OUT
+		0x07,		// Length of the descriptor
+		0x05,		// Type: Endpoint Descriptor
+		0x03,		// Endpoint: D7: 0-Out 1-In, D6-D4=0, D3-D0 Endpoint number
+		0x03,		// Attributes:
+					// D1:0 Transfer type: 00 = Control 01 = Isochronous 10 = Bulk 11 = Interrupt
+					// 			The following only apply to isochronous endpoints. Else set to 0.
+					// D3:2 Synchronisation Type: 00 = No Synchronisation 01 = Asynchronous 10 = Adaptive 11 = Synchronous
+					// D5:4	Usage Type: 00 = Data endpoint 01 = Feedback endpoint 10 = Implicit feedback Data endpoint 11 = Reserved
+					// D7:6 = 0
+		0x40, 0x00, // Maximum packet size can be handled
+		0x18,		// Interval for polling, in units of 1 ms for low/full speed
+
 };
 
 /* configure descriptor */
