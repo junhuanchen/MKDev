@@ -32,7 +32,7 @@ void main(void)
 
   CfgFsys();    // Configure sys
   mDelaymS(5);  //
-  mInitSTDIO(); //  Init UART0
+  // mInitSTDIO(), LOG("main ready\r\n"); //  Init UART0
 
   // CH554WDTModeSelect(1); // Start WDT
 

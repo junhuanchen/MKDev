@@ -206,10 +206,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>19</ColumnNumber>
+      <ColumnNumber>76</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>56</TopLine>
-      <CurrentLine>56</CurrentLine>
+      <TopLine>54</TopLine>
+      <CurrentLine>54</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -258,7 +258,7 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <FileNumber>6</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -272,7 +272,7 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <FileNumber>7</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -287,7 +287,7 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\USERS\ADMINISTRATOR\DESKTOP\MKDEV\USB\USBDEF.H</PathWithFilename>
+    <PathWithFilename>C:\Users\Administrator\Desktop\MKDev\USB\USBDEF.H</PathWithFilename>
     <TopLine>274</TopLine>
     <CurrentLine>274</CurrentLine>
     <Constant>0</Constant>
@@ -1657,9 +1657,9 @@
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>19</ColumnNumber>
-          <TopLine>56</TopLine>
-          <CurrentLine>56</CurrentLine>
+          <ColumnNumber>76</ColumnNumber>
+          <TopLine>54</TopLine>
+          <CurrentLine>54</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\Usb\Usb.c</Name>
