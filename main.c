@@ -20,11 +20,11 @@ void InitMkDev()
   mDelaymS(5);  //
   mInitSTDIO(); //  Init UART0
 
-  // CH554WDTModeSelect(1); // Start WDT
+  CH554WDTModeSelect(1); // Start WDT
 
   USBDeviceInit();
   HAL_ENABLE_INTERRUPTS();
-  LOG("InitMkDev\r\n");
+  // LOG("InitMkDev\r\n");
 }
 
 void CheckUsbState()
@@ -75,7 +75,7 @@ void main(void)
 
     // unit_test_hid_data();
 
-    // LOG("debug_state %d\r\n", debug_state);
+    // // LOG("debug_state %d\r\n", debug_state);
 
     // MouseBYTE[1] += 1;
     // MouseBYTE[2] += 1;
@@ -92,8 +92,8 @@ void main(void)
 
     // continue;
 
-    // CH554WDTFeed(0);
+    CH554WDTFeed(0);
     // mDelaymS(100);  //
-    // LOG("CH554WDTFeed\r\n");
+    // // LOG("CH554WDTFeed\r\n");
   }
 }

@@ -141,7 +141,7 @@ static UINT8 isCapsLock()
   UINT8 res = 0;
 
   res = GetKeyboardLedStatus();
-  // LOG("GetKeyboardLedStatus() %c%c \r\n", HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
+  // // LOG("GetKeyboardLedStatus() %c%c \r\n", HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
 
   tmp = res & CAPS_LOCK_ON;
   // printf("res %d %c%c\r\n", tmp, HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
@@ -155,7 +155,7 @@ static UINT8 isNumLock()
   UINT8 res = 0;
 
   res = GetKeyboardLedStatus();
-  // LOG("GetKeyboardLedStatus() %c%c \r\n", HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
+  // // LOG("GetKeyboardLedStatus() %c%c \r\n", HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
 
   tmp = res & NUM_LOCK_ON;
   // printf("res %d %c%c\r\n", tmp, HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
@@ -168,7 +168,7 @@ static void usb_key_unit_test()
   int i = 0;
   mDelaymS(1000);
 
-  // LOG("GetKeyboardLedStatus %X \r\n", GetKeyboardLedStatus());
+  // // LOG("GetKeyboardLedStatus %X \r\n", GetKeyboardLedStatus());
 
   if (1 == isCapsLock())
   {

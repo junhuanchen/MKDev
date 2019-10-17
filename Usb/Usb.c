@@ -162,7 +162,7 @@ void USBDeviceInit()
 
     IE_USB = 1;	//Enable USB interrupt
 
-    LOG("USBDeviceInit\r\n");
+    // LOG("USBDeviceInit\r\n");
 }
 
 UINT8 GetKeyboardLedStatus()
@@ -649,10 +649,10 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
     }
 }
 
-void unit_test_hid_data()
+static void unit_test_hid_data()
 {
 	int i = 0;
-    LOG("EP3_RX_BUF\r\n");
+    // LOG("EP3_RX_BUF\r\n");
 
     disp_bytes("EP3_RX_BUF", EP3_RX_BUF, EP3_SIZE);
     
@@ -663,7 +663,7 @@ void unit_test_hid_data()
     
     Enp3IntIn(EP3_RX_BUF, EP3_SIZE);
     
-    LOG("EP3_TX_BUF\r\n");
+    // LOG("EP3_TX_BUF\r\n");
 
     disp_bytes("EP3_TX_BUF", EP3_TX_BUF, EP3_SIZE);
 
