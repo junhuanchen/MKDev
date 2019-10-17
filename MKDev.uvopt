@@ -209,7 +209,7 @@
       <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>56</TopLine>
-      <CurrentLine>67</CurrentLine>
+      <CurrentLine>56</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -264,11 +264,11 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>10</TopLine>
-      <CurrentLine>21</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Usb\UsbEvent.c</PathWithFileName>
-      <FilenameWithoutPath>UsbEvent.c</FilenameWithoutPath>
+      <PathWithFileName>.\QueueArray.c</PathWithFileName>
+      <FilenameWithoutPath>QueueArray.c</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
@@ -281,13 +281,13 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Usb\QueueArray.c</PathWithFileName>
-      <FilenameWithoutPath>QueueArray.c</FilenameWithoutPath>
+      <PathWithFileName>.\ControlEvent.c</PathWithFileName>
+      <FilenameWithoutPath>ControlEvent.c</FilenameWithoutPath>
     </File>
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\Administrator\Desktop\MKDev\USB\USBDEF.H</PathWithFilename>
+    <PathWithFilename>C:\USERS\ADMINISTRATOR\DESKTOP\MKDEV\USB\USBDEF.H</PathWithFilename>
     <TopLine>274</TopLine>
     <CurrentLine>274</CurrentLine>
     <Constant>0</Constant>
@@ -1659,7 +1659,7 @@
           <Name>.\main.c</Name>
           <ColumnNumber>19</ColumnNumber>
           <TopLine>56</TopLine>
-          <CurrentLine>67</CurrentLine>
+          <CurrentLine>56</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\Usb\Usb.c</Name>
@@ -1668,16 +1668,10 @@
           <CurrentLine>643</CurrentLine>
         </Doc>
         <Doc>
-          <Name>\USERS\ADMINISTRATOR\DESKTOP\MKDEV\USB\USBDEF.H</Name>
+          <Name>USB\USBDEF.H</Name>
           <ColumnNumber>0</ColumnNumber>
           <TopLine>274</TopLine>
           <CurrentLine>274</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\Usb\UsbEvent.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>10</TopLine>
-          <CurrentLine>21</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

@@ -372,14 +372,14 @@
               <FilePath>.\Public\System.C</FilePath>
             </File>
             <File>
-              <FileName>UsbEvent.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Usb\UsbEvent.c</FilePath>
-            </File>
-            <File>
               <FileName>QueueArray.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Usb\QueueArray.c</FilePath>
+              <FilePath>.\QueueArray.c</FilePath>
+            </File>
+            <File>
+              <FileName>ControlEvent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ControlEvent.c</FilePath>
             </File>
           </Files>
         </Group>

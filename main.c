@@ -14,19 +14,6 @@
 							
 #include ".\Usb\Usb.h"
 
-void InitMkDev()
-{
-  CfgFsys();    // Configure sys
-  mDelaymS(5);  //
-  // mInitSTDIO(); //  Init UART0
-
-  CH554WDTModeSelect(1); // Start WDT
-
-  USBDeviceInit();
-  HAL_ENABLE_INTERRUPTS();
-  // LOG("InitMkDev\r\n");
-}
-
 void CheckUsbState()
 {
   if (CheckPCReady() && CheckPCSleeped())
@@ -37,60 +24,30 @@ void CheckUsbState()
 
 // int debug_state = 0;
 
-#include <assert.h>
-
 static QueueArray xdata Array;
 
 void main(void)
 {
   static UINT8 Recv[MAX_PACKET_SIZE];
 
-  InitMkDev();
+  CfgFsys();    // Configure sys
+  mDelaymS(5);  //
+  mInitSTDIO(); //  Init UART0
 
-  // return;
+  // CH554WDTModeSelect(1); // Start WDT
 
-  // UINT8 pData[4];
+  USBDeviceInit();
+  
+  HAL_ENABLE_INTERRUPTS();
 
   ControlEventInit(&Array);
-
-  // tmp = res & 0x1 == 0x1;
-  // printf("main %d %c%c\r\n", tmp, HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
-
-  // usb_key_unit_test();
-
-  // memset(pData, 0, sizeof(pData));
-
-  // MouseBYTE[3] = 1;
   
   while (1)
   {
+    // CH554WDTFeed(0);
+
     CheckUsbState();
 
     UsbEventExec(&Array, Recv);
-
-    // mDelaymS(1000);
-
-    // unit_test_hid_data();
-
-    // // LOG("debug_state %d\r\n", debug_state);
-
-    // MouseBYTE[1] += 1;
-    // MouseBYTE[2] += 1;
-
-    // MouseBYTE[0] = 1;
-    // SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-    // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
-
-    // mDelaymS(100);
-
-    // MouseBYTE[0] = 0;
-    // SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-    // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
-
-    // continue;
-
-    CH554WDTFeed(0);
-    // mDelaymS(100);  //
-    // // LOG("CH554WDTFeed\r\n");
   }
 }
