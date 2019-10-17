@@ -18,7 +18,7 @@ void InitMkDev()
 {
   CfgFsys();    // Configure sys
   mDelaymS(5);  //
-  mInitSTDIO(); //  Init UART0
+  // mInitSTDIO(); //  Init UART0
 
   CH554WDTModeSelect(1); // Start WDT
 
@@ -44,9 +44,6 @@ static QueueArray xdata Array;
 void main(void)
 {
   static UINT8 Recv[MAX_PACKET_SIZE];
-
-  int i = 0;
-  UINT16 ontimer = 0;
 
   InitMkDev();
 
