@@ -30,7 +30,7 @@ void ControlEventIn(QueueArray *Array, UINT8 *Recv)
             {
                 memcpy(Value.event, &Recv[i], sizeof(Value.event));
 
-                disp_bytes("1 Value.event", Value.event, sizeof(Value.event));
+                // disp_bytes("1 Value.event", Value.event, sizeof(Value.event));
 
                 // disp_bytes("2 Array.Size", &Array->Size, 1);
                 // disp_bytes("2 Array.MaxSize", &Array->MaxSize, 1);
@@ -67,13 +67,37 @@ void ControlEventOut(QueueArray *Array, UINT8 *Recv)
     {
         tmp = *value;
         // disp_bytes("tmp.event", tmp.event, sizeof(tmp.event));
-        switch (tmp.event[0])
+        switch (tmp.event[1])
         {
-        case 0x1:
+        case 0x01:
+            switch (tmp.event[2])
+            {
+            case 0x00:
+                Enp1IntIn(&tmp.event[3], KEYBOARD_LEN);
+                break;
+            case 0x01:
+                ClickKey(tmp.event[3]);
+                break;
+            case 0x02:
+                ClickCustom(tmp.event[3]);
+                break;
+            }
             break;
-        case 0x2:
+        case 0x02:
+            switch (tmp.event[2])
+            {
+            case 0x00:
+                Enp2IntIn(&tmp.event[3], KEYBOARD_LEN);
+                break;
+            case 0x01:
+                MouseMove(tmp.event[3], tmp.event[4], tmp.event[5]);
+                break;
+            case 0x02:
+                MouseScroll(tmp.event[3]);
+                break;
+            }
             break;
-        case 0x3:
+        case 0x03:
             report(Array, Recv);
             break;
         default:
@@ -87,5 +111,5 @@ void UsbEventExec(QueueArray *Array, UINT8 *Recv)
 {
     ControlEventIn(Array, Recv);
 
-    // ControlEventOut(Array, Recv);
+    ControlEventOut(Array, Recv);
 }

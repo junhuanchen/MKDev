@@ -88,7 +88,7 @@ static void SetNullKey(char *HIDKey)
   HIDKey[2] = 0X00;
 }
 
-static void SetFuncKey(char *HIDKey, char FuncKey)
+static void SetCustomKey(char *HIDKey, char FuncKey)
 {
   HIDKey[0] = 0X00;
   HIDKey[2] = FuncKey;
@@ -117,14 +117,14 @@ void ClickKey(char key)
   mDelaymS(20);
 }
 
-void ClickFunc(char key)
+void ClickCustom(char key)
 {
   UINT8 pData[KEYBOARD_LEN];
   memset(pData, 0, sizeof(pData));
   // disp_bytes(pData, sizeof(pData));
   mDelaymS(20);
 
-  SetFuncKey(pData, key);
+  SetCustomKey(pData, key);
   SendKeyboardToUsb(pData, sizeof(pData));
   // disp_bytes((char *)pData, sizeof(pData));
   mDelaymS(20);
@@ -172,7 +172,7 @@ static void usb_key_unit_test()
 
   if (1 == isCapsLock())
   {
-    ClickFunc(CAPS_LOCK);
+    ClickCustom(CAPS_LOCK);
   }
 
   for (i = '0'; i <= '9'; i++)
@@ -186,7 +186,7 @@ static void usb_key_unit_test()
   
   if (0 == isCapsLock())
   {
-    ClickFunc(CAPS_LOCK);
+    ClickCustom(CAPS_LOCK);
   }
   
   for (i = 'A'; i <= 'Z'; i++)

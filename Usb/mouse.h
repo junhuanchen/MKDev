@@ -20,31 +20,35 @@ static void SendMouseToUsb(UINT8 *pData, UINT8 len)
 // BYTE3 -- Y坐标变化量，与byte的bit5组成9位符号数，负数表示向下移，正数表上移。用补码表示变化量
 // BYTE4 -- 滚轮变化。0x01表示滚轮向前滚动一格；0xFF表示滚轮向后滚动一格；0x80是个中间值，不滚动。
 
-UINT8 MouseBYTE[] = {0x00, 0x00, 0x00, 0x00};
+// void MouseLeftClick(UINT8 *Bytes, UINT8 interval)
+// {
+//   Bytes[0] = 1;
+//   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
+//   // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
+//   mDelaymS(interval);
 
-void MouseLeftClick(UINT8 *Bytes, UINT8 interval)
+//   Bytes[0] = 0;
+//   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
+//   // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
+// }
+
+void MouseMove(UINT8 State, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系， 附带鼠标状态
 {
-  Bytes[0] = 1;
-  SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-  // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
-  mDelaymS(interval);
+  UINT8 Bytes[] = {0x00, 0x00, 0x00, 0x00};
 
-  Bytes[0] = 0;
-  SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-  // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
-}
-
-void MouseMove(UINT8 *Bytes, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系
-{
+  Bytes[0] = State;
   Bytes[1] += X;
   Bytes[2] += Y;
-  SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-  disp_bytes("MouseMove", (char *)&MouseBYTE, sizeof(MouseBYTE));
+  Enp2IntIn(Bytes, MOUSE_LEN);
+  // disp_bytes("MouseMove", (char *)&MouseBYTE, sizeof(MouseBYTE));
 }
 
-void MouseScroll(UINT8 *Bytes, UINT8 Value) // 上 0x01 ， 下 0xFF，停止 0x80
+void MouseScroll(UINT8 Value) // 上 0x01 ， 下 0xFF，停止 0x80
 {
+  UINT8 Bytes[] = {0x00, 0x00, 0x00, 0x00};
+
   Bytes[3] += Value;
-  SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-  disp_bytes("MouseScroll", (char *)&MouseBYTE, sizeof(MouseBYTE));
+
+  Enp2IntIn(Bytes, MOUSE_LEN);
+  // disp_bytes("MouseScroll", (char *)&MouseBYTE, sizeof(MouseBYTE));
 }
