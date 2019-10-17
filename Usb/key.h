@@ -3,7 +3,7 @@
 
 #include "Usb.h"
 
-#include ".\Public\Protocol.h"
+#include "Protocol.h"
 
 /*******************************************************************************
 * Function Name  : static SendKey( char *p)
@@ -101,7 +101,7 @@ static void SendKeyboardToUsb(UINT8 *pData, UINT8 len)
 
 void ClickKey(char key)
 {
-  UINT8 pData[8];
+  UINT8 pData[KEYBOARD_LEN];
   memset(pData, 0, sizeof(pData));
   // disp_bytes(pData, sizeof(pData));
   mDelaymS(20);
@@ -119,7 +119,7 @@ void ClickKey(char key)
 
 void ClickFunc(char key)
 {
-  UINT8 pData[8];
+  UINT8 pData[KEYBOARD_LEN];
   memset(pData, 0, sizeof(pData));
   // disp_bytes(pData, sizeof(pData));
   mDelaymS(20);
@@ -168,7 +168,7 @@ static void usb_key_unit_test()
   int i = 0;
   mDelaymS(1000);
 
-  LOG("GetKeyboardLedStatus %X \r\n", GetKeyboardLedStatus());
+  // LOG("GetKeyboardLedStatus %X \r\n", GetKeyboardLedStatus());
 
   if (1 == isCapsLock())
   {

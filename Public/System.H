@@ -50,6 +50,6 @@ void CH554WDTFeed(UINT8 tim);        // CH554看门狗喂狗
 
 extern UINT8 HexToAscii(UINT8 hex);
 
-void disp_bytes(UINT8 *byte, UINT8 len); // 显示字节数
+void disp_bytes(UINT8 *flag, UINT8 *byte, UINT8 len); // 显示字节数
 
 #endif

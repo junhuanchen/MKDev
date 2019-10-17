@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include ".\Public\Type.h"
 #include ".\Public\CH552.H"
 #include ".\Public\System.h"
 #include ".\Public\Mcu.h"
@@ -162,6 +161,7 @@ void USBDeviceInit()
     UEP3_T_LEN = 0;
 
     IE_USB = 1;	//Enable USB interrupt
+
     LOG("USBDeviceInit\r\n");
 }
 
@@ -236,6 +236,18 @@ void Enp3IntIn(UINT8 *dat, UINT8 size)
     UEP3_CTRL = UEP3_CTRL & ~MASK_UEP_T_RES | UEP_T_RES_ACK; //有数据时上传数据并应答ACK
     while ((UEP3_CTRL & MASK_UEP_T_RES) == UEP_T_RES_ACK)
         ; //  Waiting upload complete, avoid overwriting
+}
+
+static volatile BOOL Enp3IntOutState = FALSE;
+BOOL Enp3IntOut(UINT8 *dat)
+{
+    if (Enp3IntOutState)
+    {
+        memcpy(dat, EP3_RX_BUF, EP3_SIZE);
+        Enp3IntOutState = FALSE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 /*******************************************************************************
@@ -579,6 +591,8 @@ void UsbIsr(void) interrupt INT_NO_USB using 1 //USB中断服务程序,使用寄存器组1
 
         case UIS_TOKEN_OUT | 3: // endpoint3 OUT
             len = MAX_PACKET_SIZE;
+            
+            Enp3IntOutState = TRUE;
 
             UEP3_CTRL ^= bUEP_R_TOG; //同步标志位翻转
             break;
@@ -640,7 +654,7 @@ void unit_test_hid_data()
 	int i = 0;
     LOG("EP3_RX_BUF\r\n");
 
-    disp_bytes(EP3_RX_BUF, EP3_SIZE);
+    disp_bytes("EP3_RX_BUF", EP3_RX_BUF, EP3_SIZE);
     
     for (i = 0; i < EP3_SIZE; i++)
     {
@@ -651,6 +665,6 @@ void unit_test_hid_data()
     
     LOG("EP3_TX_BUF\r\n");
 
-    disp_bytes(EP3_TX_BUF, EP3_SIZE);
+    disp_bytes("EP3_TX_BUF", EP3_TX_BUF, EP3_SIZE);
 
 }

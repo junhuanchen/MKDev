@@ -122,51 +122,6 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>124</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>127</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>MAIN.C</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>128</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>MAIN.C</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
           <LineNumber>559</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
@@ -180,7 +135,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>4</Number>
+          <Number>1</Number>
           <Type>0</Type>
           <LineNumber>557</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -251,10 +206,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>115</TopLine>
-      <CurrentLine>127</CurrentLine>
+      <TopLine>56</TopLine>
+      <CurrentLine>67</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -279,10 +234,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>30</ColumnNumber>
+      <ColumnNumber>23</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>32</CurrentLine>
+      <TopLine>637</TopLine>
+      <CurrentLine>643</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Usb\Usb.c</PathWithFileName>
       <FilenameWithoutPath>Usb.c</FilenameWithoutPath>
@@ -301,7 +256,61 @@
       <PathWithFileName>.\Public\System.C</PathWithFileName>
       <FilenameWithoutPath>System.C</FilenameWithoutPath>
     </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>10</TopLine>
+      <CurrentLine>21</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Usb\UsbEvent.c</PathWithFileName>
+      <FilenameWithoutPath>UsbEvent.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Usb\QueueArray.c</PathWithFileName>
+      <FilenameWithoutPath>QueueArray.c</FilenameWithoutPath>
+    </File>
   </Group>
+
+  <AlienFiles>
+    <PathWithFilename>C:\Users\Administrator\Desktop\MKDev\USB\USBDEF.H</PathWithFilename>
+    <TopLine>274</TopLine>
+    <CurrentLine>274</CurrentLine>
+    <Constant>0</Constant>
+    <WindowPosition>
+      <length>0</length>
+      <flags>0</flags>
+      <showCmd>0</showCmd>
+      <MinPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MinPosition>
+      <MaxPosition>
+        <xPos>0</xPos>
+        <yPos>0</yPos>
+      </MaxPosition>
+      <NormalPosition>
+        <Top>0</Top>
+        <Left>0</Left>
+        <Right>0</Right>
+        <Bottom>0</Bottom>
+      </NormalPosition>
+    </WindowPosition>
+  </AlienFiles>
 
   <WinLayout>
     <sActiveDebugView>Default</sActiveDebugView>
@@ -1638,5 +1647,40 @@
       </Window>
     </View>
   </WinLayout>
+
+  <MDIGroups>
+    <Orientation>1</Orientation>
+    <ActiveMDIGroup>0</ActiveMDIGroup>
+    <MDIGroup>
+      <Size>100</Size>
+      <ActiveTab>0</ActiveTab>
+      <Documents>
+        <Doc>
+          <Name>.\main.c</Name>
+          <ColumnNumber>19</ColumnNumber>
+          <TopLine>56</TopLine>
+          <CurrentLine>67</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\Usb\Usb.c</Name>
+          <ColumnNumber>23</ColumnNumber>
+          <TopLine>637</TopLine>
+          <CurrentLine>643</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>\USERS\ADMINISTRATOR\DESKTOP\MKDEV\USB\USBDEF.H</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>274</TopLine>
+          <CurrentLine>274</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\Usb\UsbEvent.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>10</TopLine>
+          <CurrentLine>21</CurrentLine>
+        </Doc>
+      </Documents>
+    </MDIGroup>
+  </MDIGroups>
 
 </ProjectOpt>

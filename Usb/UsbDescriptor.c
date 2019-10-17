@@ -1,5 +1,5 @@
 
-#include ".\Public\Type.h"
+#include "..\Public\CH552.H"
 
 #include "UsbDef.h"
 #include "hid.h"

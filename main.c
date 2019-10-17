@@ -9,14 +9,10 @@
 
 #include <stdio.h>
 #include <string.h>
-
-#include ".\Public\CH552.H"
-#include ".\Public\System.h"
-#include ".\Public\Mcu.h"
-
+						   
+#include "ControlEvent.h"
+							
 #include ".\Usb\Usb.h"
-#include ".\Usb\Key.h"
-#include ".\Usb\Mouse.h"
 
 void InitMkDev()
 {
@@ -39,10 +35,26 @@ void CheckUsbState()
   }
 }
 
+// int debug_state = 0;
+
+#include <assert.h>
+
+static QueueArray xdata Array;
+
 void main(void)
 {
-  // UINT8 pData[4];
+  static UINT8 Recv[MAX_PACKET_SIZE];
+
+  int i = 0;
+  UINT16 ontimer = 0;
+
   InitMkDev();
+
+  // return;
+
+  // UINT8 pData[4];
+
+  ControlEventInit(&Array);
 
   // tmp = res & 0x1 == 0x1;
   // printf("main %d %c%c\r\n", tmp, HexToAscii((res >> 4) & 0x0f), HexToAscii(res & 0x0f));
@@ -52,13 +64,18 @@ void main(void)
   // memset(pData, 0, sizeof(pData));
 
   // MouseBYTE[3] = 1;
+  
   while (1)
   {
     CheckUsbState();
 
-    mDelaymS(1000);
+    UsbEventExec(&Array, Recv);
 
-    unit_test_hid_data();
+    // mDelaymS(1000);
+
+    // unit_test_hid_data();
+
+    // LOG("debug_state %d\r\n", debug_state);
 
     // MouseBYTE[1] += 1;
     // MouseBYTE[2] += 1;

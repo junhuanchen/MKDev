@@ -127,6 +127,9 @@ typedef const unsigned char code      *PUINT8C;
 #define STRUCT_OFFSET( s, m )       ( (UINT8)( & (((s) *)0) -> (m) ) )  /* get the offset address for a member of a structure */
 #endif
 
+#define StructOf(Addr, Type, Field) \
+  ((Type *)((char *)(Addr) - (UINT8)(&((Type *)0)->Field)))
+
 #ifdef __cplusplus
 }
 #endif
@@ -982,11 +985,11 @@ extern "C" {
 #define USB_BO_CSW_SIZE			0x0D	/* ����״̬��CSW���ܳ��� */
 #endif
 #ifndef USB_BO_CBW_SIG0
-#define USB_BO_CBW_SIG0         0x55    /* �����CBWʶ���־'USBC' */
+#define USB_BO_CBW_SIG0         0x55    /* �����CBWʶ����?'USBC' */
 #define USB_BO_CBW_SIG1         0x53
 #define USB_BO_CBW_SIG2         0x42
 #define USB_BO_CBW_SIG3         0x43
-#define USB_BO_CSW_SIG0         0x55    /* ����״̬��CSWʶ���־'USBS' */
+#define USB_BO_CSW_SIG0         0x55    /* ����״̬��CSWʶ����?'USBS' */
 #define USB_BO_CSW_SIG1         0x53
 #define USB_BO_CSW_SIG2         0x42
 #define USB_BO_CSW_SIG3         0x53

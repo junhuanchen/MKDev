@@ -296,10 +296,10 @@ UINT8 HexToAscii(UINT8 hex)
     return hex;
 }
 
-void disp_bytes(UINT8 *byte, UINT8 len)
+void disp_bytes(UINT8 *flag, UINT8 *byte, UINT8 len)
 {
   int i = 0;
-  LOG("disp_bytes ");
+  LOG("%s ", flag);
   for (i = 0; i < len; i++)
   {
       
