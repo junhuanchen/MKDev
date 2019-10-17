@@ -46,7 +46,8 @@ void ControlEventIn(QueueArray *Array, UINT8 *Recv)
 
 void report(QueueArray *Array, UINT8 *Recv)
 {
-    const UINT8 VERSION = 0x10;
+    const UINT8 VERSION = 0x11;
+
     memset(Recv, 0, MAX_PACKET_SIZE);
     Recv[0] = VERSION;
     Recv[1] = 4;
