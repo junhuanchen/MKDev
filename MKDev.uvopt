@@ -206,10 +206,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>76</ColumnNumber>
+      <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>54</TopLine>
-      <CurrentLine>54</CurrentLine>
+      <TopLine>36</TopLine>
+      <CurrentLine>51</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -287,9 +287,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\Administrator\Desktop\MKDev\USB\USBDEF.H</PathWithFilename>
-    <TopLine>274</TopLine>
-    <CurrentLine>274</CurrentLine>
+    <PathWithFilename>C:\Users\Administrator\Desktop\MKDev\CRYPT.H</PathWithFilename>
+    <TopLine>93</TopLine>
+    <CurrentLine>100</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1657,21 +1657,15 @@
       <Documents>
         <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>76</ColumnNumber>
-          <TopLine>54</TopLine>
-          <CurrentLine>54</CurrentLine>
+          <ColumnNumber>16</ColumnNumber>
+          <TopLine>36</TopLine>
+          <CurrentLine>51</CurrentLine>
         </Doc>
         <Doc>
-          <Name>.\Usb\Usb.c</Name>
-          <ColumnNumber>23</ColumnNumber>
-          <TopLine>637</TopLine>
-          <CurrentLine>643</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>USB\USBDEF.H</Name>
+          <Name>CRYPT.H</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>274</TopLine>
-          <CurrentLine>274</CurrentLine>
+          <TopLine>93</TopLine>
+          <CurrentLine>100</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
