@@ -654,7 +654,7 @@ static void unit_test_hid_data()
 	int i = 0;
     // LOG("EP3_RX_BUF\r\n");
 
-    disp_bytes("EP3_RX_BUF", EP3_RX_BUF, EP3_SIZE);
+    DebugBytes("EP3_RX_BUF", EP3_RX_BUF, EP3_SIZE);
     
     for (i = 0; i < EP3_SIZE; i++)
     {
@@ -665,6 +665,6 @@ static void unit_test_hid_data()
     
     // LOG("EP3_TX_BUF\r\n");
 
-    disp_bytes("EP3_TX_BUF", EP3_TX_BUF, EP3_SIZE);
+    DebugBytes("EP3_TX_BUF", EP3_TX_BUF, EP3_SIZE);
 
 }

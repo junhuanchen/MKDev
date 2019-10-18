@@ -23,22 +23,22 @@ void ControlEventIn(QueueArray *Array, UINT8 *Recv)
 
     if (Enp3IntOut(Recv))
     {
-        // disp_bytes("Enp3IntOut", Recv, MAX_PACKET_SIZE);
+        // DebugBytes("Enp3IntOut", Recv, MAX_PACKET_SIZE);
         for (i = 0; i < MAX_PACKET_SIZE; i += 16)
         {
             if (0xBD == Recv[i])
             {
                 memcpy(Value.event, &Recv[i], sizeof(Value.event));
 
-                // disp_bytes("1 Value.event", Value.event, sizeof(Value.event));
+                // DebugBytes("1 Value.event", Value.event, sizeof(Value.event));
 
-                // disp_bytes("2 Array.Size", &Array->Size, 1);
-                // disp_bytes("2 Array.MaxSize", &Array->MaxSize, 1);
+                // DebugBytes("2 Array.Size", &Array->Size, 1);
+                // DebugBytes("2 Array.MaxSize", &Array->MaxSize, 1);
 
                 QueueArrayBreakPush(Array, &Value);
 
-                // disp_bytes("3 Array.Size", &Array->Size, 1);
-                // disp_bytes("3 Array.MaxSize", &Array->MaxSize, 1);
+                // DebugBytes("3 Array.Size", &Array->Size, 1);
+                // DebugBytes("3 Array.MaxSize", &Array->MaxSize, 1);
             }
         }
     }
@@ -67,7 +67,7 @@ void ControlEventOut(QueueArray *Array, UINT8 *Recv)
     if (value != NULL)
     {
         tmp = *value;
-        // disp_bytes("tmp.event", tmp.event, sizeof(tmp.event));
+        // DebugBytes("tmp.event", tmp.event, sizeof(tmp.event));
         switch (tmp.event[1])
         {
         case 0x01:

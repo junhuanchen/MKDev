@@ -296,7 +296,7 @@ UINT8 HexToAscii(UINT8 hex)
     return hex;
 }
 
-void disp_bytes(UINT8 *flag, UINT8 *byte, UINT8 len)
+void DebugBytes(UINT8 *flag, UINT8 *byte, UINT8 len)
 {
   int i = 0;
   LOG("%s ", flag);

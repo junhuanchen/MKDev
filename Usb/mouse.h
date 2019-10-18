@@ -24,12 +24,12 @@ static void SendMouseToUsb(UINT8 *pData, UINT8 len)
 // {
 //   Bytes[0] = 1;
 //   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-//   // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
+//   // DebugBytes((char *)&MouseBYTE, sizeof(MouseBYTE));
 //   mDelaymS(interval);
 
 //   Bytes[0] = 0;
 //   SendMouseToUsb((char *)&MouseBYTE, MOUSE_LEN);
-//   // disp_bytes((char *)&MouseBYTE, sizeof(MouseBYTE));
+//   // DebugBytes((char *)&MouseBYTE, sizeof(MouseBYTE));
 // }
 
 void MouseMove(UINT8 State, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系， 附带鼠标状态
@@ -40,7 +40,7 @@ void MouseMove(UINT8 State, UINT8 X, UINT8 Y) // 以屏幕为准的正常坐标系， 附带鼠
   Bytes[1] += X;
   Bytes[2] += Y;
   Enp2IntIn(Bytes, MOUSE_LEN);
-  // disp_bytes("MouseMove", (char *)&MouseBYTE, sizeof(MouseBYTE));
+  // DebugBytes("MouseMove", (char *)&MouseBYTE, sizeof(MouseBYTE));
 }
 
 void MouseScroll(UINT8 Value) // 上 0x01 ， 下 0xFF，停止 0x80
@@ -50,5 +50,5 @@ void MouseScroll(UINT8 Value) // 上 0x01 ， 下 0xFF，停止 0x80
   Bytes[3] += Value;
 
   Enp2IntIn(Bytes, MOUSE_LEN);
-  // disp_bytes("MouseScroll", (char *)&MouseBYTE, sizeof(MouseBYTE));
+  // DebugBytes("MouseScroll", (char *)&MouseBYTE, sizeof(MouseBYTE));
 }

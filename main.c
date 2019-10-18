@@ -11,8 +11,9 @@
 #include <string.h>
 						   
 #include "ControlEvent.h"
-							
+#include "crypt.h"							
 #include ".\Usb\Usb.h"
+
 
 void CheckUsbState()
 {
@@ -29,22 +30,25 @@ static QueueArray xdata Array;
 void main(void)
 {
   static UINT8 Recv[MAX_PACKET_SIZE];
-
+  
   CfgFsys();    // Configure sys
   mDelaymS(5);  //
-  // mInitSTDIO(), LOG("main ready\r\n"); //  Init UART0
 
-  // CH554WDTModeSelect(1); // Start WDT
+  // mInitSTDIO(), LOG("main ready\r\n"); //  Init UART0
+  
+  if (CheckMKDevice() == FALSE) while(1);
+
+  ControlEventInit(&Array);
 
   USBDeviceInit();
   
-  HAL_ENABLE_INTERRUPTS();
+  CH554WDTModeSelect(1); // Start WDT
 
-  ControlEventInit(&Array);
+  HAL_ENABLE_INTERRUPTS();
   
   while (1)
   {
-    // CH554WDTFeed(0);
+    CH554WDTFeed(0);
 
     CheckUsbState();
 

@@ -103,17 +103,17 @@ void ClickKey(char key)
 {
   UINT8 pData[KEYBOARD_LEN];
   memset(pData, 0, sizeof(pData));
-  // disp_bytes(pData, sizeof(pData));
+  // DebugBytes(pData, sizeof(pData));
   mDelaymS(20);
 
   SetSendKey(pData, key);
   SendKeyboardToUsb(pData, sizeof(pData));
-  // disp_bytes((char *)pData, sizeof(pData));
+  // DebugBytes((char *)pData, sizeof(pData));
   mDelaymS(20);
 
   SetNullKey(pData);
   SendKeyboardToUsb(pData, sizeof(pData));
-  // disp_bytes((char *)pData, sizeof(pData));
+  // DebugBytes((char *)pData, sizeof(pData));
   mDelaymS(20);
 }
 
@@ -121,17 +121,17 @@ void ClickCustom(char key)
 {
   UINT8 pData[KEYBOARD_LEN];
   memset(pData, 0, sizeof(pData));
-  // disp_bytes(pData, sizeof(pData));
+  // DebugBytes(pData, sizeof(pData));
   mDelaymS(20);
 
   SetCustomKey(pData, key);
   SendKeyboardToUsb(pData, sizeof(pData));
-  // disp_bytes((char *)pData, sizeof(pData));
+  // DebugBytes((char *)pData, sizeof(pData));
   mDelaymS(20);
 
   SetNullKey(pData);
   SendKeyboardToUsb(pData, sizeof(pData));
-  // disp_bytes((char *)pData, sizeof(pData));
+  // DebugBytes((char *)pData, sizeof(pData));
   mDelaymS(20);
 }
 
