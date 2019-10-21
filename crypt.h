@@ -9,9 +9,9 @@ UINT8 *GetUUID()
 {
     static UINT8 ID[LenUUID];
     ID[0] = *(PUINT8C)(0x3FFC);
-    ID[0] = *(PUINT8C)(0x3FFD);
-    ID[0] = *(PUINT8C)(0x3FFE);
-    ID[0] = *(PUINT8C)(0x3FFF);
+    ID[1] = *(PUINT8C)(0x3FFD);
+    ID[2] = *(PUINT8C)(0x3FFE);
+    ID[3] = *(PUINT8C)(0x3FFF);
     return ID;
 }
 
