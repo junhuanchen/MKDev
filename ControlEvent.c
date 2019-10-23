@@ -88,7 +88,7 @@ void ControlEventOut(QueueArray *Array, UINT8 *Recv)
             switch (tmp.event[2])
             {
             case 0x00:
-                Enp2IntIn(&tmp.event[3], KEYBOARD_LEN);
+                Enp2IntIn(&tmp.event[3], MOUSE_LEN);
                 break;
             case 0x01:
                 MouseMove(tmp.event[3], tmp.event[4], tmp.event[5]);
