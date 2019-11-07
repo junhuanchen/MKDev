@@ -66,6 +66,7 @@ void ControlEventOut(QueueArray *Array, UINT8 *Recv)
     value = QueueArrayFront(Array);
     if (value != NULL)
     {
+		TXD = !TXD;
         tmp = *value;
         // DebugBytes("tmp.event", tmp.event, sizeof(tmp.event));
         switch (tmp.event[1])
